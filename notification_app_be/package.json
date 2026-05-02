@@ -1,18 +1,19 @@
 {
-  "name": "vehicle_maintenance_scheduler",
+  "name": "notification_app_be",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "cron": "^4.4.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1"
   },
