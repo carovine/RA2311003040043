@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import Log from "../logging_middleware/logger.js";
 
 dotenv.config();
 const app = express();
@@ -24,11 +25,14 @@ const getDepots = async () => {
       },
     });
     const data = await response.json();
-    console.log(data);
     depots = await data.depots; // Storing the fetched depots
-    console.log("depots:\n", depots);
   } catch (error) {
-    console.error("Error fetching depots:", error);
+    Log(
+      "backend",
+      "error",
+      "service",
+      `Error fetching depots: ${error.message}`,
+    );
   }
 };
 
@@ -46,10 +50,14 @@ const getVehicles = async () => {
     });
     const data = await response.json();
     vehicles = await data.vehicles; // Storing the fetched vehicles
-    console.log("vehicles:\n", vehicles);
     sortVehiclesByImpact(); // Sorting vehicles by impact when the server starts
   } catch (error) {
-    console.error("Error fetching vehicles:", error);
+    Log(
+      "backend",
+      "error",
+      "service",
+      `Error fetching vehicles: ${error.message}`,
+    );
   }
 };
 
@@ -66,7 +74,12 @@ const todaysMechanicHours = () => {
     }
     return totalHours;
   } catch (error) {
-    console.error("Error calculating today's mechanic hours:", error);
+    Log(
+      "backend",
+      "error",
+      "service",
+      `Error calculating today's mechanic hours: ${error.message}`,
+    );
   }
 };
 
@@ -83,14 +96,17 @@ const todayVehicleSubset = () => {
       }
       i++;
     }
-    console.log("final subset", todaySchedule);
   } catch (error) {
-    console.error("Error calculating today's vehicle subset:", error);
+    Log(
+      "backend",
+      "error",
+      "service",
+      `Error calculating today's vehicle subset: ${error.message}`,
+    );
   }
 };
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
   getDepots(); // Fetching depots when the server starts
   getVehicles(); // Fetching vehicles when the server starts
 });
