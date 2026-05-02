@@ -63,3 +63,12 @@ db.userPreferences.updateOne(
   },
   { upsert: true }
 )
+
+Stage 3
+
+1. The query has accurate syntax
+2. Since there is no index, it requires a full table scan to filter studentID and isRead then a sort on createdAt
+3. We can add a composite index to sort the student table
+4. We cant just index every column, we only need to index on columns that we use for querying/filtering, etc.
+5. SELECT * FROM notifications WHERE notificationType = 'Placement'
+  AND createdAt >= NOW() - INTERVAL '7 DAY' ORDER BY createdAt DESC;
